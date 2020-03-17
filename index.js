@@ -17,7 +17,7 @@ async function displayForDay(date) {
     const lines = csv.split('\n');
 
     const headers = lines.shift();
-    addRow(splitLine(headers));
+    addRow(splitLine(headers), true);
 
     lines.forEach(line => addRow(splitLine(line)));
 }
@@ -43,16 +43,31 @@ function splitLine(line) {
 }
 
 function addRow(entries, isHeader) {
+    const extended = deriveStats(entries, isHeader);
+
     // remove latitude, longitude
-    entries.splice(6, 2);
+    extended.splice(6, 2);
 
     const tr = document.createElement('tr');
-    entries.forEach(entry => {
+    extended.forEach(entry => {
         const cell = document.createElement(isHeader ? 'th' : 'td');
         cell.textContent = entry;
         tr.append(cell);
     });
     table.append(tr);
+}
+
+function deriveStats(entries, isHeader) {
+    if (isHeader) return [...entries, 'Deaths per confirmed case'];
+
+    const confirmed = entries[3];
+    const deaths = entries[4];
+    const recovered = entries[5];
+
+    const extended = entries;
+    const deathPercentage = deaths / confirmed * 100;
+    extended.push(isNaN(deathPercentage) ? '-' : `${deathPercentage.toFixed(2)} %`);
+    return extended;
 }
 
 // test
