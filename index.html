@@ -11,6 +11,9 @@
             from CSSE at Johns Hopkins University</a>.
     </p>
 
+    <p>Select a day below and hit "Apply" to see the status from a date in the past. Click on a table header to sort by
+        this column.</p>
+
     <input type="date" id="date-input">
     <button id="apply-button">Apply</button>
 
@@ -18,6 +21,17 @@
         <thead></thead>
         <tbody></tbody>
     </table>
+
+    <p>* Note that the ratio of deaths per confirmed cases is not the same as mortality rate. There are a few factors
+        skewing this metric:
+        <ul>
+            <li>Confirmed cases are just a lower bound of the number of actual cases, since <a
+                    href="https://www.nytimes.com/2020/03/16/health/coronavirus-statistics-undetected.html"
+                    target="_blank">many may go
+                    undetected</a>.</li>
+            <li>Death cases correspond infections that happened earlier.</li>
+        </ul>
+    </p>
 
     <script src="lib/sort-table.min.js"></script>
     <script src="index.js"></script>

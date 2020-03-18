@@ -98,7 +98,7 @@ function addRow(entries, isHeader) {
 }
 
 function deriveStats(entries, isHeader) {
-    if (isHeader) return [...entries, 'Deaths per confirmed case'];
+    if (isHeader) return [...entries, 'Deaths per confirmed case*'];
 
     const confirmed = entries[3];
     const deaths = entries[4];
