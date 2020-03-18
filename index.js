@@ -1,6 +1,8 @@
 const baseUrl = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/';
 
 const table = document.querySelector('#main-table');
+const thead = document.querySelector('#main-table > thead');
+const tbody = document.querySelector('#main-table > tbody');
 const dateInput = document.querySelector('#date-input');
 const applyButton = document.querySelector('#apply-button');
 
@@ -44,6 +46,10 @@ async function displayForDay(date) {
     addRow(splitLine(headers), true);
 
     lines.forEach(line => addRow(splitLine(line)));
+
+    // trick sort-table into forgetting it already ran
+    table.attributes.removeNamedItem('data-js-sort-table');
+    sortTable.init();
 }
 
 function splitLine(line) {
@@ -67,18 +73,28 @@ function splitLine(line) {
 }
 
 function addRow(entries, isHeader) {
+    if (entries.length !== 8) {
+        console.warn('Unexpected number of entries: ' + entries.length);
+        return;
+    }
+
     const extended = deriveStats(entries, isHeader);
 
     // remove latitude, longitude
     extended.splice(6, 2);
+    // remove last-update date
+    extended.splice(2, 1);
 
     const tr = document.createElement('tr');
-    extended.forEach(entry => {
+    extended.forEach((entry, i) => {
         const cell = document.createElement(isHeader ? 'th' : 'td');
         cell.textContent = entry;
+        // confirmed, deaths, recovered, ratio
+        if ([2, 3, 4, 5].includes(i)) cell.classList.add('js-sort-number');
         tr.append(cell);
     });
-    table.append(tr);
+
+    (isHeader ? thead : tbody).append(tr);
 }
 
 function deriveStats(entries, isHeader) {
