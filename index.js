@@ -1,6 +1,22 @@
 const baseUrl = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/';
 
 const table = document.querySelector('#main-table');
+const dateInput = document.querySelector('#date-input');
+const applyButton = document.querySelector('#apply-button');
+
+(function defaultToYesteday() {
+    const date = new Date();
+    date.setDate(date.getDate() - 1);
+
+    const month = date.getMonth() + 1 + '';
+    const day = date.getDate() + '';
+    dateInput.value = `${date.getFullYear()}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+})();
+
+applyButton.addEventListener('click', () => {
+    const date = new Date(dateInput.value);
+    displayForDay(date);
+});
 
 async function dataForDay(date) {
     // MM-DD-YYYY.csv
@@ -9,6 +25,8 @@ async function dataForDay(date) {
     const fileName = `${month.padStart(2, '0')}-${day.padStart(2, '0')}-${date.getFullYear()}.csv`;
 
     const response = await fetch(baseUrl + fileName);
+    if (response.status >= 400) throw `Failed to load data (${(await response.text()).replace('\n', '')})`;
+
     return await response.text();
 }
 
@@ -69,6 +87,3 @@ function deriveStats(entries, isHeader) {
     extended.push(isNaN(deathPercentage) ? '-' : `${deathPercentage.toFixed(2)} %`);
     return extended;
 }
-
-// test
-displayForDay(new Date('2020-03-15'));
