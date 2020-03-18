@@ -5,17 +5,37 @@ body {
 }
 
 body {
-    background-color: #e5e9ec;
+    background-color: white;
     padding: 1em;
     color: #222;
 }
 
+.wrapper {
+    max-width: 1000px;
+    margin: auto;
+}
+
 table {
     border-collapse: collapse;
+    margin: 1em 0;
+}
+
+table th {
+    background-color: #d8e0e6;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    user-select: none;
+}
+
+table th,
+table td {
+    padding: 2px 1ex;
+    border: 1px solid #d8e0e6;
 }
 
 table tr:hover {
-    background-color: #d1d9e0;
+    background-color: #eaedf2;
 }
 
 table td {
