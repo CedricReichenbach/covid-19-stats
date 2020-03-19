@@ -15,23 +15,47 @@ body {
     margin: auto;
 }
 
+.input-area {
+    background-color: #eaedf2;
+    padding: 1em;
+    text-align: center;
+}
+
+input {
+    background-color: white;
+    border: 1px solid #becad3;
+    padding: 1ex;
+}
+
+#apply-button {
+    background-color: #58c;
+    color: white;
+    border: none;
+    padding: 1ex 2ex;
+    border-radius: 0.5ex;
+    margin-left: 1em;
+}
+
 table {
     border-collapse: collapse;
     margin: 1em 0;
-}
-
-table th {
-    background-color: #d8e0e6;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    user-select: none;
 }
 
 table th,
 table td {
     padding: 2px 1ex;
     border: 1px solid #d8e0e6;
+}
+
+table th {
+    background-color: #c8d2e0;
+    color: #3c444e;
+    background-clip: padding-box;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    cursor: pointer;
+    user-select: none;
 }
 
 table tr:hover {
@@ -42,6 +66,7 @@ table td {
     text-align: right;
 }
 
+/* province/state and contry/region */
 table td:nth-of-type(1),
 table td:nth-of-type(2) {
     text-align: left;

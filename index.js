@@ -7,22 +7,23 @@ const dateInput = document.querySelector('#date-input');
 const applyButton = document.querySelector('#apply-button');
 
 (function defaultToYesteday() {
-    const date = yesterday();
+    const date = yesterdayish();
     const month = date.getMonth() + 1 + '';
     const day = date.getDate() + '';
     dateInput.value = `${date.getFullYear()}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
 })();
 
-displayForDay(yesterday());
+displayForDay(yesterdayish());
 
 applyButton.addEventListener('click', () => {
     const date = new Date(dateInput.value);
     displayForDay(date);
 });
 
-function yesterday() {
+/** 1.5 days ago */
+function yesterdayish() {
     const date = new Date();
-    date.setDate(date.getDate() - 1);
+    date.setHours(date.getHours() - 36);
     return date;
 }
 
@@ -41,6 +42,9 @@ async function dataForDay(date) {
 async function displayForDay(date) {
     const csv = await dataForDay(date).catch(err => alert(err));
     const lines = csv.split('\n');
+
+    thead.innerHTML = '';
+    tbody.innerHTML = '';
 
     const headers = lines.shift();
     addRow(splitLine(headers), true);
