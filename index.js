@@ -84,16 +84,18 @@ function addRow(entries, isHeader) {
 
     const extended = deriveStats(entries, isHeader);
 
-    // remove latitude, longitude
-    extended.splice(6, 2);
-    // remove last-update date
-    extended.splice(2, 1);
+    // remove combined_key
+    extended.splice(11, 1);
+    // remove last-update date, latitude, longitude
+    extended.splice(4, 3);
+    // remove FIPS, admin2
+    extended.splice(0, 2);
 
     const tr = document.createElement('tr');
     extended.forEach((entry, i) => {
         const cell = document.createElement(isHeader ? 'th' : 'td');
         cell.textContent = entry;
-        // confirmed, deaths, recovered, ratio
+        // confirmed, deaths, recovered, active, ratio
         if ([2, 3, 4, 5].includes(i)) cell.classList.add('js-sort-number');
         tr.append(cell);
     });
