@@ -77,7 +77,7 @@ function splitLine(line) {
 }
 
 function addRow(entries, isHeader) {
-    if (entries.length !== 8) {
+    if (entries.length !== 12) {
         console.warn('Unexpected number of entries: ' + entries.length);
         return;
     }
