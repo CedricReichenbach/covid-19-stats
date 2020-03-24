@@ -106,9 +106,9 @@ function addRow(entries, isHeader) {
 function deriveStats(entries, isHeader) {
     if (isHeader) return [...entries, 'Deaths / Confirmed*'];
 
-    const confirmed = entries[2];
-    const deaths = entries[3];
-    const recovered = entries[4];
+    const confirmed = entries[7];
+    const deaths = entries[8];
+    const recovered = entries[9];
 
     const extended = entries;
     const deathPercentage = deaths / confirmed * 100;
